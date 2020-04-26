@@ -41,4 +41,6 @@ interface DataStoreRepository<Entity : DataStoreEntity> {
         }
     }
 
+    fun initialize()
+
 }
