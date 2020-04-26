@@ -14,7 +14,7 @@ import pl.gwynder.general.data.storage.repositories.strategy.ENTITIES
 import java.io.InputStream
 
 
-internal class DataStoreSingleFileReadingStrategyTest {
+internal class SingleFileDataStoreReadingStrategyTest {
 
     private val context = DataStoreContext(MockDataStoreEntity::class.java)
     private val missing = "missing"
@@ -46,8 +46,8 @@ internal class DataStoreSingleFileReadingStrategyTest {
         on { readAll(input, context.entityClass) } doReturn entities
     }
 
-    private val testExists = DataStoreSingleFileReadingStrategy(fileService, parser, context)
-    private val testMissing = DataStoreSingleFileReadingStrategy(fileService, parser, missingContext)
+    private val testExists = SingleFileDataStoreReadingStrategy(fileService, parser, context)
+    private val testMissing = SingleFileDataStoreReadingStrategy(fileService, parser, missingContext)
 
     @Test
     fun allExists() {

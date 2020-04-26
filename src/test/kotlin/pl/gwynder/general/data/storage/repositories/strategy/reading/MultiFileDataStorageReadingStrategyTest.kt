@@ -15,7 +15,7 @@ import pl.gwynder.general.data.storage.repositories.strategy.ID_LIST
 import java.io.InputStream
 
 
-internal class DataStorageMultiFileReadingStrategyTest {
+internal class MultiFileDataStorageReadingStrategyTest {
 
     private val entityClass = MockDataStoreEntity::class.java
     private val context = DataStoreContext(entityClass)
@@ -65,8 +65,8 @@ internal class DataStorageMultiFileReadingStrategyTest {
         on { readSingle(anotherInput, entityClass) } doReturn another
     }
 
-    private val testExists = DataStorageMultiFileReadingStrategy(fileService, parser, context)
-    private val testMissing = DataStorageMultiFileReadingStrategy(fileService, parser, missingContext)
+    private val testExists = MultiFileDataStorageReadingStrategy(fileService, parser, context)
+    private val testMissing = MultiFileDataStorageReadingStrategy(fileService, parser, missingContext)
 
     @Test
     fun allExists() {

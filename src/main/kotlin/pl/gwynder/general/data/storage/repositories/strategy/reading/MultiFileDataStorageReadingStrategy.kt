@@ -13,7 +13,7 @@ import pl.gwynder.general.data.storage.repositories.strategy.ID_LIST
 import java.io.InputStream
 import java.util.*
 
-class DataStorageMultiFileReadingStrategy<Entity : DataStoreEntity>(
+class MultiFileDataStorageReadingStrategy<Entity : DataStoreEntity>(
     private val fileService: DataStoreFileService,
     private val parser: DataStoreEntityParser,
     override val context: DataStoreContext<Entity>

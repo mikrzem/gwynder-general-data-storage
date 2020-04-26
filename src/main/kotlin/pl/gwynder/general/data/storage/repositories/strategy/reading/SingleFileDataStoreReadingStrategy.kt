@@ -10,7 +10,7 @@ import pl.gwynder.general.data.storage.repositories.strategy.ENTITIES
 import java.io.InputStream
 import java.util.*
 
-class DataStoreSingleFileReadingStrategy<Entity : DataStoreEntity>(
+class SingleFileDataStoreReadingStrategy<Entity : DataStoreEntity>(
     private val fileService: DataStoreFileService,
     private val parser: DataStoreEntityParser,
     override val context: DataStoreContext<Entity>
