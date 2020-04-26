@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 import pl.gwynder.general.data.storage.files.DataStoreConfig
 import java.nio.file.Path
 
-internal class PathDataStorageFileServiceTest {
+internal class PathDataStoreFileServiceTest {
 
     private val basePath: Path = Path.of("C:\\test")
-    private val pathConfig = mock<PathDataStorageConfig> {
+    private val pathConfig = mock<PathDataStoreConfig> {
         on { basePath() } doReturn basePath
     }
 
@@ -20,9 +20,9 @@ internal class PathDataStorageFileServiceTest {
         on { moduleName } doReturn name
     }
 
-    private val filesService = mock<PathFilesDataStorageService>()
+    private val filesService = mock<PathFilesDataStoreService>()
 
-    private val test = PathDataStorageFileService(
+    private val test = PathDataStoreFileService(
         pathConfig,
         config,
         filesService
@@ -38,8 +38,8 @@ internal class PathDataStorageFileServiceTest {
     fun json() {
         val result = test.json(pathDirectory, pathFile)
         verify(filesService).createDirectory(parentPath)
-        assertThat(result).isInstanceOf(PathDataStorageFile::class.java)
-        assertThat((result as PathDataStorageFile).path).isEqualTo(resultPath)
+        assertThat(result).isInstanceOf(PathDataStoreFile::class.java)
+        assertThat((result as PathDataStoreFile).path).isEqualTo(resultPath)
     }
 
 }

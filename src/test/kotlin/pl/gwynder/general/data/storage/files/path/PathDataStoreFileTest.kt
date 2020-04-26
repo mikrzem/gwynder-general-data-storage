@@ -9,7 +9,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path
 
-internal class PathDataStorageFileTest {
+internal class PathDataStoreFileTest {
 
     private val path: Path = Path.of("C:\\test\\files\\test.txt")
     private val parent: Path = path.parent
@@ -21,7 +21,7 @@ internal class PathDataStorageFileTest {
     private val outputStream = mock<OutputStream>()
 
     private val fileError = FileError("Error", RuntimeException())
-    private val fileService = mock<PathFilesDataStorageService> {
+    private val fileService = mock<PathFilesDataStoreService> {
         on { openInput(path) } doReturn inputStream
         on { openOutput(path) } doReturn outputStream
         on { delete(emptyPath) } doThrow fileError
@@ -32,21 +32,21 @@ internal class PathDataStorageFileTest {
 
     @Test
     fun input() {
-        val test = PathDataStorageFile(fileService, path)
+        val test = PathDataStoreFile(fileService, path)
         val result = test.input()
         assertThat(result).isEqualTo(inputStream)
     }
 
     @Test
     fun output() {
-        val test = PathDataStorageFile(fileService, path)
+        val test = PathDataStoreFile(fileService, path)
         val result = test.output()
         assertThat(result).isEqualTo(outputStream)
     }
 
     @Test
     fun deleteSuccessful() {
-        val test = PathDataStorageFile(fileService, path)
+        val test = PathDataStoreFile(fileService, path)
         test.delete()
         verify(fileService).delete(path)
         verify(fileService, never()).exists(emptyPath)
@@ -54,7 +54,7 @@ internal class PathDataStorageFileTest {
 
     @Test
     fun deleteEmpty() {
-        val test = PathDataStorageFile(fileService, emptyPath)
+        val test = PathDataStoreFile(fileService, emptyPath)
         test.delete()
         verify(fileService).delete(emptyPath)
         verify(fileService).exists(emptyPath)
@@ -62,7 +62,7 @@ internal class PathDataStorageFileTest {
 
     @Test
     fun deleteBad() {
-        val test = PathDataStorageFile(fileService, badPath)
+        val test = PathDataStoreFile(fileService, badPath)
         assertThrows<FileError> {
             test.delete()
         }

@@ -8,7 +8,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path
 
-class SimplePathFilesDataStorageService : BaseService(), PathFilesDataStorageService {
+class SimplePathFilesDataStoreService : BaseService(), PathFilesDataStoreService {
 
     override fun createDirectory(directory: Path) {
         try {

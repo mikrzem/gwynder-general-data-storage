@@ -6,8 +6,8 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path
 
-class PathDataStorageFile(
-    private val service: PathFilesDataStorageService,
+class PathDataStoreFile(
+    private val service: PathFilesDataStoreService,
     val path: Path
 ) : DataStorageFile {
 

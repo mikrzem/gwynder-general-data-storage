@@ -6,19 +6,19 @@ import pl.gwynder.general.data.storage.files.DataStorageFileService
 import pl.gwynder.general.data.storage.files.DataStoreConfig
 
 @Configuration
-open class PathFilesDataStorageConfig(
-    private val pathConfig: PathDataStorageConfig,
+open class PathFilesDataStoreConfig(
+    private val pathConfig: PathDataStoreConfig,
     private val config: DataStoreConfig
 ) {
 
     @Bean
-    open fun pathFilesDataStorageService(): PathFilesDataStorageService {
-        return SimplePathFilesDataStorageService()
+    open fun pathFilesDataStorageService(): PathFilesDataStoreService {
+        return SimplePathFilesDataStoreService()
     }
 
     @Bean
     open fun dataStorageFileService(): DataStorageFileService {
-        return PathDataStorageFileService(
+        return PathDataStoreFileService(
             pathConfig,
             config,
             pathFilesDataStorageService()

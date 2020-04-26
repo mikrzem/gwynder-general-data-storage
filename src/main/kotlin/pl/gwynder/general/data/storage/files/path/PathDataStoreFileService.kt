@@ -6,17 +6,17 @@ import pl.gwynder.general.data.storage.files.DataStorageFileService
 import pl.gwynder.general.data.storage.files.DataStoreConfig
 import java.nio.file.Path
 
-class PathDataStorageFileService(
-    private val fileConfig: PathDataStorageConfig,
+class PathDataStoreFileService(
+    private val fileConfig: PathDataStoreConfig,
     private val config: DataStoreConfig,
-    private val fileService: PathFilesDataStorageService
+    private val fileService: PathFilesDataStoreService
 ) : BaseService(), DataStorageFileService {
 
     override fun json(vararg path: String): DataStorageFile {
         val fixedPath: List<String> = extensionPath(path, ".json")
         val resultPath: Path = Path.of(fileConfig.basePath().toString(), *fixedPath.toTypedArray())
         ensureDirectory(resultPath)
-        return PathDataStorageFile(fileService, resultPath)
+        return PathDataStoreFile(fileService, resultPath)
     }
 
     private fun ensureDirectory(path: Path) {

@@ -4,7 +4,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path
 
-interface PathFilesDataStorageService {
+interface PathFilesDataStoreService {
 
     fun createDirectory(directory: Path)
 
