@@ -14,4 +14,8 @@ interface DataStoreEntityParser {
 
     fun <Entity : DataStoreEntity> writeSingle(output: OutputStream, data: Entity, entityClass: Class<Entity>)
 
+    fun readStrings(input: InputStream): Set<String>
+
+    fun writeStrings(output: OutputStream, data: Set<String>)
+
 }

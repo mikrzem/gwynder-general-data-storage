@@ -26,11 +26,7 @@ class JsonDataStoreEntityParser(
         data: Set<Entity>,
         entityClass: Class<Entity>
     ) {
-        try {
-            json.writeValue(output, data)
-        } catch (ex: Exception) {
-            throw ParseError("Failed to write json", ex)
-        }
+        write(output, data)
     }
 
     override fun <Entity : DataStoreEntity> readSingle(input: InputStream, entityClass: Class<Entity>): Entity {
@@ -46,11 +42,28 @@ class JsonDataStoreEntityParser(
         data: Entity,
         entityClass: Class<Entity>
     ) {
+        write(output, data)
+    }
+
+    override fun readStrings(input: InputStream): Set<String> {
+        try {
+            return setOf(*json.readValue(input, Array<String>::class.java))
+        } catch (ex: Exception) {
+            throw ParseError("Failed to parse json", ex)
+        }
+    }
+
+    override fun writeStrings(output: OutputStream, data: Set<String>) {
+        write(output, data)
+    }
+
+    private fun write(output: OutputStream, data: Any) {
         try {
             json.writeValue(output, data)
         } catch (ex: Exception) {
             throw ParseError("Failed to write json", ex)
         }
     }
+
 
 }
