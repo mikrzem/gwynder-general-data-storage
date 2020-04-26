@@ -29,4 +29,8 @@ class PathDataStoreFile(
         }
     }
 
+    override fun exists(): Boolean {
+        return service.exists(path)
+    }
+
 }

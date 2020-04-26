@@ -17,10 +17,14 @@ class DataStoreSingleFileReadingStrategy<Entity : DataStoreEntity>(
 ) : BaseService(), DataStoreReadingStrategy<Entity> {
 
     override fun all(): Set<Entity> {
-        fileService.json(ENTITIES, context.name, DATA_FILE)
-            .input().use { inputStream: InputStream ->
+        val file = fileService.json(ENTITIES, context.name, DATA_FILE)
+        if (file.exists()) {
+            file.input().use { inputStream: InputStream ->
                 return parser.readAll(inputStream, context.entityClass)
             }
+        } else {
+            return setOf()
+        }
     }
 
     override fun single(id: String): Optional<Entity> {

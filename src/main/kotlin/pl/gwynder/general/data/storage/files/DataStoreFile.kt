@@ -11,4 +11,6 @@ interface DataStoreFile {
 
     fun delete()
 
+    fun exists(): Boolean
+
 }

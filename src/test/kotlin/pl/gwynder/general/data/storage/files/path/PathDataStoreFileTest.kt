@@ -26,6 +26,7 @@ internal class PathDataStoreFileTest {
         on { openOutput(path) } doReturn outputStream
         on { delete(emptyPath) } doThrow fileError
         on { delete(badPath) } doThrow fileError
+        on { exists(path) } doReturn true
         on { exists(emptyPath) } doReturn false
         on { exists(badPath) } doReturn true
     }
@@ -66,6 +67,13 @@ internal class PathDataStoreFileTest {
         assertThrows<FileError> {
             test.delete()
         }
+    }
+
+    @Test
+    fun exists() {
+        val test = PathDataStoreFile(fileService, path)
+        val result = test.exists()
+        assertThat(result).isTrue()
     }
 
 }

@@ -13,9 +13,12 @@ import pl.gwynder.general.data.storage.repositories.strategy.DATA_FILE
 import pl.gwynder.general.data.storage.repositories.strategy.ENTITIES
 import java.io.InputStream
 
+
 internal class DataStoreSingleFileReadingStrategyTest {
 
     private val context = DataStoreContext(MockDataStoreEntity::class.java)
+    private val missing = "missing"
+    private val missingContext = DataStoreContext(MockDataStoreEntity::class.java, missing)
 
     private val entityId = "entity"
     private val entity = MockDataStoreEntity(entityId)
@@ -27,38 +30,47 @@ internal class DataStoreSingleFileReadingStrategyTest {
 
     private val file = mock<DataStoreFile> {
         on { input() } doReturn input
+        on { exists() } doReturn true
+    }
+
+    private val missingFile = mock<DataStoreFile> {
+        on { exists() } doReturn false
     }
 
     private val fileService = mock<DataStoreFileService> {
         on { json(ENTITIES, context.name, DATA_FILE) } doReturn file
+        on { json(ENTITIES, missingContext.name, DATA_FILE) } doReturn missingFile
     }
 
     private val parser = mock<DataStoreEntityParser> {
         on { readAll(input, context.entityClass) } doReturn entities
     }
 
-    private val test = DataStoreSingleFileReadingStrategy(
-        fileService,
-        parser,
-        context
-    )
+    private val testExists = DataStoreSingleFileReadingStrategy(fileService, parser, context)
+    private val testMissing = DataStoreSingleFileReadingStrategy(fileService, parser, missingContext)
 
     @Test
-    fun all() {
-        val result = test.all()
+    fun allExists() {
+        val result = testExists.all()
         assertThat(result).isEqualTo(entities)
     }
 
     @Test
+    fun allMissing() {
+        val result = testMissing.all()
+        assertThat(result).isEmpty()
+    }
+
+    @Test
     fun singleFound() {
-        val result = test.single(entityId)
+        val result = testExists.single(entityId)
         assertThat(result.isPresent).isTrue()
         assertThat(result.get()).isEqualTo(entity)
     }
 
     @Test
     fun singleMissing() {
-        val result = test.single("missing")
+        val result = testExists.single(missing)
         assertThat(result.isPresent).isFalse()
     }
 
