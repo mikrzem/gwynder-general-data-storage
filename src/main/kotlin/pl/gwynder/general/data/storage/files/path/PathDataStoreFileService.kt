@@ -1,8 +1,8 @@
 package pl.gwynder.general.data.storage.files.path
 
 import pl.gwynder.general.commons.base.BaseService
-import pl.gwynder.general.data.storage.files.DataStorageFile
-import pl.gwynder.general.data.storage.files.DataStorageFileService
+import pl.gwynder.general.data.storage.files.DataStoreFile
+import pl.gwynder.general.data.storage.files.DataStoreFileService
 import pl.gwynder.general.data.storage.files.DataStoreConfig
 import java.nio.file.Path
 
@@ -10,9 +10,9 @@ class PathDataStoreFileService(
     private val fileConfig: PathDataStoreConfig,
     private val config: DataStoreConfig,
     private val fileService: PathFilesDataStoreService
-) : BaseService(), DataStorageFileService {
+) : BaseService(), DataStoreFileService {
 
-    override fun json(vararg path: String): DataStorageFile {
+    override fun json(vararg path: String): DataStoreFile {
         val fixedPath: List<String> = extensionPath(path, ".json")
         val resultPath: Path = Path.of(fileConfig.basePath().toString(), *fixedPath.toTypedArray())
         ensureDirectory(resultPath)

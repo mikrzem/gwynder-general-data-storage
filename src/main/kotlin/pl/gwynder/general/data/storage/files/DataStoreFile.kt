@@ -3,7 +3,7 @@ package pl.gwynder.general.data.storage.files
 import java.io.InputStream
 import java.io.OutputStream
 
-interface DataStorageFile {
+interface DataStoreFile {
 
     fun input(): InputStream
 
