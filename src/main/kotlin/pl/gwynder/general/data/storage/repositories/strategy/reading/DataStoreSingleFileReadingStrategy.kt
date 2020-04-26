@@ -19,7 +19,7 @@ class DataStoreSingleFileReadingStrategy<Entity : DataStoreEntity>(
     override fun all(): Set<Entity> {
         fileService.json(ENTITIES, context.name, DATA_FILE)
             .input().use { inputStream: InputStream ->
-                return parser.read(inputStream, context.entityClass)
+                return parser.readAll(inputStream, context.entityClass)
             }
     }
 

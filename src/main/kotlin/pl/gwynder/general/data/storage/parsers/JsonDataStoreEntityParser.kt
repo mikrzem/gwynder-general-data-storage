@@ -11,7 +11,7 @@ class JsonDataStoreEntityParser(
     private val json: ObjectMapper
 ) : BaseService(), DataStoreEntityParser {
 
-    override fun <Entity : DataStoreEntity> read(input: InputStream, entityClass: Class<Entity>): Set<Entity> {
+    override fun <Entity : DataStoreEntity> readAll(input: InputStream, entityClass: Class<Entity>): Set<Entity> {
         try {
             @Suppress("UNCHECKED_CAST")
             val arrayType: Class<Array<Entity>> = entityClass.arrayType() as Class<Array<Entity>>
@@ -21,7 +21,31 @@ class JsonDataStoreEntityParser(
         }
     }
 
-    override fun <Entity : DataStoreEntity> write(output: OutputStream, data: Set<Entity>, entityClass: Class<Entity>) {
+    override fun <Entity : DataStoreEntity> writeAll(
+        output: OutputStream,
+        data: Set<Entity>,
+        entityClass: Class<Entity>
+    ) {
+        try {
+            json.writeValue(output, data)
+        } catch (ex: Exception) {
+            throw ParseError("Failed to write json", ex)
+        }
+    }
+
+    override fun <Entity : DataStoreEntity> readSingle(input: InputStream, entityClass: Class<Entity>): Entity {
+        try {
+            return json.readValue(input, entityClass)
+        } catch (ex: Exception) {
+            throw ParseError("Failed to parse json", ex)
+        }
+    }
+
+    override fun <Entity : DataStoreEntity> writeSingle(
+        output: OutputStream,
+        data: Entity,
+        entityClass: Class<Entity>
+    ) {
         try {
             json.writeValue(output, data)
         } catch (ex: Exception) {

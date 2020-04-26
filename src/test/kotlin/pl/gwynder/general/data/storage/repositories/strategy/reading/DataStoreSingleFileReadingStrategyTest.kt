@@ -34,7 +34,7 @@ internal class DataStoreSingleFileReadingStrategyTest {
     }
 
     private val parser = mock<DataStoreEntityParser> {
-        on { read(input, context.entityClass) } doReturn entities
+        on { readAll(input, context.entityClass) } doReturn entities
     }
 
     private val test = DataStoreSingleFileReadingStrategy(
