@@ -49,6 +49,7 @@ class HashMapDataStoreCachingStrategy<Entity : DataStoreEntity>(
                 throw CacheError("Attempt to cache entity without id")
             }
         }
+        loaded = true
     }
 
     @Synchronized
