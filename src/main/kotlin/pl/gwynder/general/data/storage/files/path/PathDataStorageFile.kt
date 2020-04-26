@@ -1,7 +1,8 @@
-package pl.gwynder.general.data.storage.files
+package pl.gwynder.general.data.storage.files.path
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import pl.gwynder.general.data.storage.files.DataStorageFile
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream

@@ -1,6 +1,9 @@
-package pl.gwynder.general.data.storage.files
+package pl.gwynder.general.data.storage.files.path
 
 import pl.gwynder.general.commons.base.BaseService
+import pl.gwynder.general.data.storage.files.DataStorageFile
+import pl.gwynder.general.data.storage.files.DataStorageFileService
+import pl.gwynder.general.data.storage.files.DataStoreConfig
 import java.nio.file.Path
 
 class PathDataStorageFileService(

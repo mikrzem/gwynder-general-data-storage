@@ -1,11 +1,11 @@
-package pl.gwynder.general.data.storage.config
+package pl.gwynder.general.data.storage.files.path
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import pl.gwynder.general.data.storage.files.DataStorageFileService
 import pl.gwynder.general.data.storage.files.DataStoreConfig
-import pl.gwynder.general.data.storage.files.PathDataStorageConfig
-import pl.gwynder.general.data.storage.files.PathDataStorageFileService
+import pl.gwynder.general.data.storage.files.path.PathDataStorageConfig
+import pl.gwynder.general.data.storage.files.path.PathDataStorageFileService
 
 @Configuration
 open class PathFilesDataStorageConfig(
@@ -15,7 +15,10 @@ open class PathFilesDataStorageConfig(
 
     @Bean
     open fun dataStorageFileService(): DataStorageFileService {
-        return PathDataStorageFileService(pathConfig, config)
+        return PathDataStorageFileService(
+            pathConfig,
+            config
+        )
     }
 
 }
