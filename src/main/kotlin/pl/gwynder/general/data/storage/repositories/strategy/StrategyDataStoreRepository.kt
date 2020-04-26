@@ -1,6 +1,7 @@
 package pl.gwynder.general.data.storage.repositories.strategy
 
 import pl.gwynder.general.commons.base.BaseService
+import pl.gwynder.general.data.storage.entities.DataStoreContext
 import pl.gwynder.general.data.storage.entities.DataStoreEntity
 import pl.gwynder.general.data.storage.repositories.DataStoreRepository
 import pl.gwynder.general.data.storage.repositories.strategy.caching.DataStoreCachingStrategy
@@ -13,13 +14,8 @@ open class StrategyDataStoreRepository<Entity : DataStoreEntity>(
     private val reading: DataStoreReadingStrategy<Entity>,
     private val caching: DataStoreCachingStrategy<Entity>,
     private val saving: DataStoreSavingStrategy<Entity>,
-    override val entityClass: Class<Entity>,
-    typeOverride: String? = null
+    override val context: DataStoreContext<Entity>
 ) : BaseService(), DataStoreRepository<Entity> {
-
-    private val typeName: String = typeOverride ?: super.type
-    override val type: String
-        get() = typeName
 
     @Synchronized
     override fun select(): Set<Entity> {

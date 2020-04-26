@@ -1,22 +1,20 @@
 package pl.gwynder.general.data.storage.repositories
 
+import pl.gwynder.general.data.storage.entities.DataStoreContext
 import pl.gwynder.general.data.storage.entities.DataStoreEntity
 import pl.gwynder.general.data.storage.errors.DataNotFound
 import java.util.*
 
 interface DataStoreRepository<Entity : DataStoreEntity> {
 
-    val type: String
-        get() = entityClass.typeName
-
-    val entityClass: Class<Entity>
+    val context: DataStoreContext<Entity>
 
     fun select(): Set<Entity>
 
     fun find(id: String): Optional<Entity>
 
     fun get(id: String): Entity {
-        return find(id).orElseThrow { DataNotFound(type, id) }
+        return find(id).orElseThrow { DataNotFound(context.name, id) }
     }
 
     fun create(entity: Entity): Entity

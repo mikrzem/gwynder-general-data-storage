@@ -6,6 +6,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import pl.gwynder.general.data.storage.entities.DataStoreContext
 import pl.gwynder.general.data.storage.entities.MockDataStoreEntity
 import pl.gwynder.general.data.storage.repositories.strategy.caching.DataStoreCachingStrategy
 import pl.gwynder.general.data.storage.repositories.strategy.reading.DataStoreReadingStrategy
@@ -23,6 +24,8 @@ internal class StrategyDataStoreRepositoryTest {
     private val cacheEntityList = setOf(cacheEntity)
     private val createdEntity: MockDataStoreEntity = MockDataStoreEntity(idCreated)
     private val updatedEntity: MockDataStoreEntity = MockDataStoreEntity(idUpdated)
+
+    private val context = DataStoreContext(MockDataStoreEntity::class.java)
 
     private val readStrategy = mock<DataStoreReadingStrategy<MockDataStoreEntity>> {
         on { all() } doReturn readEntityList
@@ -51,14 +54,14 @@ internal class StrategyDataStoreRepositoryTest {
         readStrategy,
         cacheLoadedStrategy,
         saveStrategy,
-        MockDataStoreEntity::class.java
+        context
     )
 
     private val testCacheEmpty = StrategyDataStoreRepository(
         readStrategy,
         cacheEmptyStrategy,
         saveStrategy,
-        MockDataStoreEntity::class.java
+        context
     )
 
     @Test
