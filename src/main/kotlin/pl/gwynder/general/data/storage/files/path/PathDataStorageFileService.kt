@@ -8,19 +8,22 @@ import java.nio.file.Path
 
 class PathDataStorageFileService(
     private val fileConfig: PathDataStorageConfig,
-    private val config: DataStoreConfig
+    private val config: DataStoreConfig,
+    private val fileService: PathFilesDataStorageService
 ) : BaseService(), DataStorageFileService {
 
     override fun json(vararg path: String): DataStorageFile {
         val fixedPath: List<String> = extensionPath(path, ".json")
         val resultPath: Path = Path.of(fileConfig.basePath().toString(), *fixedPath.toTypedArray())
         ensureDirectory(resultPath)
-        return PathDataStorageFile(resultPath)
+        return PathDataStorageFile(fileService, resultPath)
     }
 
     private fun ensureDirectory(path: Path) {
         val parent = path.parent
-        parent?.toFile()?.mkdirs()
+        if (parent != null) {
+            fileService.createDirectory(parent)
+        }
     }
 
     private fun extensionPath(path: Array<out String>, extension: String): List<String> {
