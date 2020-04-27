@@ -1,5 +1,6 @@
 package pl.gwynder.general.data.storage.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import pl.gwynder.general.data.storage.files.DataStoreFileService
@@ -12,12 +13,13 @@ import pl.gwynder.general.data.storage.repositories.factory.SimpleDataStoreRepos
 
 @Configuration
 open class DataStoreRepositoryConfig(
-    private val dataStoreFileService: DataStoreFileService
+    private val dataStoreFileService: DataStoreFileService,
+    private val objectMapper: ObjectMapper
 ) {
 
     @Bean
     open fun dataStoreEntityParser(): DataStoreEntityParser {
-        return JsonDataStoreEntityParser()
+        return JsonDataStoreEntityParser(objectMapper)
     }
 
     @Bean
