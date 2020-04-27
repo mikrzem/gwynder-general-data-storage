@@ -66,11 +66,15 @@ class SimpleStrategyDataStoreRepositoryBuilder<Entity : DataStoreEntity>(
             context: DataStoreContext<Entity>
         ) -> DataStoreRepository<Entity>
     ): DataStoreRepository<Entity> {
-        return creator(reading, caching, saving, context)
+        val repository = creator(reading, caching, saving, context)
+        repository.initialize()
+        return repository
     }
 
     override fun build(): DataStoreRepository<Entity> {
-        return StrategyDataStoreRepository(reading, caching, saving, context)
+        val repository = StrategyDataStoreRepository(reading, caching, saving, context)
+        repository.initialize()
+        return repository
     }
 
 }
